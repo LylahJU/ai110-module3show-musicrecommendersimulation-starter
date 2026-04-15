@@ -1,5 +1,7 @@
 # 🎵 Music Recommender Simulation
 
+![Music Recommender Output](musicRecommenderScreenshot.png)
+
 ## Project Summary
 
 In this project you will build and explain a small music recommender system.
@@ -11,23 +13,46 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
-
+This project implements a CLI-based music recommender system that ranks songs based on how well they match a user's preferences. It combines categorical features like genre and mood with numerical features like energy, tempo, and valence to compute a similarity score. The system outputs the top recommendations along with explanations for why each song was selected.
 ---
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world recommendation systems combine item metadata with user preferences to suggest the songs that are most likely to fit a listener's current taste. My version will prioritize broad content signals like genre and mood first, then fine-tune the score using numerical audio features so the chosen songs feel both stylistically right and emotionally close to the user's preference.
 
-Some prompts to answer:
+- `Song` features used in the simulation:
+  - `genre`
+  - `mood`
+  - `energy`
+  - `tempo_bpm`
+  - `valence`
+  - `danceability`
+  - `acousticness`
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+- `UserProfile` information stored:
+  - preferred `genre`
+  - preferred `mood`
+  - preferred numeric values for `energy`, `tempo_bpm`, `valence`, `danceability`, and `acousticness`
 
-You can include a simple diagram or bullet list if helpful.
+The recommender computes a score for each song by measuring how closely the song's features match the user profile, then ranks songs by descending score to choose the best recommendations.
+
+### Algorithm Recipe
+
+- `genre_score = 2.0` if `song.genre == user.genre`, else `0.0`
+- `mood_score = 1.0` if `song.mood == user.mood`, else `0.0`
+- `energy_score = 1.0 - abs(song.energy - user.energy)`, clamped to [0, 1]
+- `tempo_score = 1.0 - (abs(song.tempo_bpm - user.tempo_bpm) / 200)`, clamped to [0, 1]
+- `valence_score = 1.0 - abs(song.valence - user.valence)`, clamped to [0, 1]
+- `total_score = genre_score + mood_score + energy_score + tempo_score + valence_score`
+
+This recipe prioritizes categorical features (genre, mood) with fixed bonuses, then adds continuous fine-tuning scores for energy, tempo, and valence to capture audio similarity.
+
+### Potential Biases
+
+- This system over-prioritizes genre matches (2.0 points), which could hide songs from other genres that perfectly match the user's mood and energy.
+- Tempo and valence are treated equally to energy, but users may weight them differently.
+- The system ignores `danceability` and `acousticness`, which may be important to some listeners.
+- Users who care more about vibe (mood + energy) than style (genre) may feel under-served by this recipe.
 
 ---
 
@@ -98,8 +123,9 @@ Read and complete `model_card.md`:
 
 Write 1 to 2 paragraphs here about what you learned:
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+This project showed me how simple scoring rules can create surprisingly realistic recommendations. Even though the system only uses a few features, it still captures important aspects of musical taste like energy and mood.
+
+I also learned how bias can easily appear in recommender systems. For example, giving genre a high weight caused certain songs to dominate results, even when other songs matched better numerically. This made me realize how small design decisions can strongly affect outcomes in real-world AI systems.
 
 
 ---

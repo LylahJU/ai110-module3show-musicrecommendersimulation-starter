@@ -9,3 +9,10 @@ id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
 8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
 9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
 10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
+11,Golden Hour Waltz,Velvet Strings,classical,nostalgic,0.28,72,0.46,0.34,0.94
+12,Highway Heat,Steel Horizon,country,adventurous,0.81,108,0.73,0.69,0.32
+13,Midnight Cipher,Rhythm Rift,hip hop,confident,0.88,94,0.68,0.78,0.12
+14,Desert Mirage,Sahara Bloom,world,dreamy,0.52,88,0.55,0.47,0.58
+15,Thunderforge,Iron Sentinel,metal,furious,0.96,168,0.32,0.60,0.04
+16,Velvet Lagoon,Satin Shore,R&B,romantic,0.61,102,0.79,0.66,0.41
+17,Pixel Sunrise,Arcade Flair,electronic,playful,0.84,130,0.88,0.85,0.15

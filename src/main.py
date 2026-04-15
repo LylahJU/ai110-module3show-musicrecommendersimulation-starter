@@ -13,21 +13,54 @@ from recommender import load_songs, recommend_songs
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs("data/songs.csv")
+    print(f"Loaded songs: {len(songs)}")
 
     # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
+    profiles = {
+        "High-Energy Pop": {
+            "genre": "pop",
+            "mood": "happy",
+            "energy": 0.9,
+            "tempo_bpm": 130,
+            "valence": 0.8,
+            "danceability": 0.8,
+            "acousticness": 0.2,
+        },
+        "Chill Lofi": {
+            "genre": "lofi",
+            "mood": "chill",
+            "energy": 0.3,
+            "tempo_bpm": 75,
+            "valence": 0.6,
+            "danceability": 0.5,
+            "acousticness": 0.8,
+        },
+        "Intense Rock": {
+            "genre": "rock",
+            "mood": "intense",
+            "energy": 0.95,
+            "tempo_bpm": 150,
+            "valence": 0.4,
+            "danceability": 0.6,
+            "acousticness": 0.1,
+        },
+    }
 
-    recommendations = recommend_songs(user_prefs, songs, k=5)
+    for profile_name, user_prefs in profiles.items():
+        print(f"\n🔥 Profile: {profile_name}")
+        
+        recommendations = recommend_songs(user_prefs, songs, k=5)
 
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+        print("\nTop recommendations:\n")
+        print("=" * 50)
+
+        for i, rec in enumerate(recommendations, start=1):
+            song, score, explanation = rec
+            print(f"{i}. {song['title']} by {song['artist']}")
+            print(f"   Score: {score:.2f}")
+            print(f"   Why: {explanation}")
+            print("-" * 50)
 
 
 if __name__ == "__main__":
